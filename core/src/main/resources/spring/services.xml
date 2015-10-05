@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="indexService" name="indexService" class="org.nanogoogle.service.impl.LuceneIndexService">
+        <constructor-arg index="0" ref="webCrawler"/>
+        <constructor-arg index="1" ref="indexer"/>
+    </bean>
+
+    <bean id="searchService" name="searchService" class="org.nanogoogle.service.impl.LuceneSearchService">
+        <constructor-arg ref="searcher"/>
+    </bean>
+
+    <bean id="webCrawler" class="org.nanogoogle.crawler.WebCrawlerImpl"/>
+    <bean id="directory" name="directory" class="org.apache.lucene.store.RAMDirectory"/>
+
+    <bean id="indexer" class="org.nanogoogle.index.LuceneIndexer">
+        <constructor-arg ref="directory"/>
+    </bean>
+    <bean id="searcher" class="org.nanogoogle.search.LuceneSearcher">
+        <constructor-arg ref="directory"/>
+    </bean>
+</beans>

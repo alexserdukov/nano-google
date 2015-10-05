@@ -1,0 +1,10 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile project(':core')
+
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf',
+            'javax.servlet:jstl:1.2')
+    runtime('org.springframework.boot:spring-boot-starter-tomcat')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}

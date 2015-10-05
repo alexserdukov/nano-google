@@ -1,0 +1,13 @@
+jar {
+    manifest.attributes provider: 'gradle'
+}
+
+dependencies {
+    compile('org.jsoup:jsoup:1.8.3',
+            'org.apache.lucene:lucene-core:5.3.1',
+            'org.apache.lucene:lucene-analyzers-common:5.3.1',
+            'org.apache.lucene:lucene-queryparser:5.3.1',
+            'io.reactivex:rxjava:1.0.10'
+            )
+}
+
