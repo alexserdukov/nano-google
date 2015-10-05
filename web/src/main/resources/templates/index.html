@@ -5,12 +5,20 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Nano Google</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"/>
 </head>
 <body>
-<form action="/index" th:object="${indexForm}" method="post">
-    <input type="text" th:field="*{uri}"/>
-    <input type="submit" value="Submit"/>
-</form>
-<a href="/">Search</a>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <form action="/index" th:object="${indexForm}" method="post">
+            <input type="text" th:field="*{uri}"/>
+            <input type="submit" value="Submit"/>
+        </form>
+        <a href="/">Search</a>
+    </div>
+</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package org.nanogoogle.controller;
 
+import com.google.common.collect.Lists;
 import org.nanogoogle.model.SearchDocument;
 import org.nanogoogle.service.IndexService;
 import org.nanogoogle.service.SearchService;
@@ -58,15 +59,17 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute SearchForm searchForm, Model model) {
+    @ModelAttribute("searchResults")
+    public List<SearchDocument> search(@ModelAttribute SearchForm searchForm, Model model) {
         try {
             final List<SearchDocument> searchResults = searchService.search(searchForm.getKeyword(), 0, 10);
             logger.debug("Found " + searchResults.size() + " records");
-            model.addAttribute("searchResults", searchResults);
+            return searchResults;
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage());
+            model.addAttribute("errorMessage", "Failure when searching for keyword " + searchForm.getKeyword());
         }
-        return "search";
+        return Lists.newArrayList();
     }
 
     private boolean validateUrl(String uri) {

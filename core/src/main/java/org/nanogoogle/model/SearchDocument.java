@@ -22,10 +22,6 @@ public class SearchDocument {
         return foundUrls;
     }
 
-    public void setFoundUrls(Set<URI> foundUrls) {
-        this.foundUrls = foundUrls;
-    }
-
     public String getUri() {
         return uri;
     }

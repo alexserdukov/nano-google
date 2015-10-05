@@ -6,6 +6,8 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import rx.Observable;
 import rx.Observer;
@@ -15,6 +17,7 @@ import java.util.concurrent.CountDownLatch;
 
 public class LuceneIndexer implements Indexer<Document> {
 
+    Logger logger = LoggerFactory.getLogger(LuceneIndexer.class);
     private Directory directory;
 
     @Autowired
@@ -41,6 +44,7 @@ public class LuceneIndexer implements Indexer<Document> {
                 @Override
                 public void onCompleted() {
                     try {
+                        logger.debug("Successfully indexed");
                         writer.commit();
                         writer.close();
                         latch.countDown();
@@ -52,6 +56,7 @@ public class LuceneIndexer implements Indexer<Document> {
                 @Override
                 public void onError(Throwable e) {
                     try {
+                        logger.error("Failure indexed");
                         writer.close();
                     } catch (IOException e1) {
                         // TODO log error

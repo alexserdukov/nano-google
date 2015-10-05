@@ -12,12 +12,11 @@
         </layout>
     </appender>
 
-    <logger name="org.nanogoogle.*" level="debug"
-            additivity="false">
+    <logger name="org.nanogoogle.controller" level="debug">
         <appender-ref ref="STDOUT" />
     </logger>
 
-    <root level="debug">
+    <root level="error">
         <appender-ref ref="STDOUT" />
     </root>
 
