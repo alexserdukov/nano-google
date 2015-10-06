@@ -5,6 +5,6 @@ import java.net.URI;
 
 public interface IndexService {
 
-    void index (URI uri, int level) throws IOException;
+    int index (URI uri, int level) throws IOException;
 
 }

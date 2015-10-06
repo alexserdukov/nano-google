@@ -13,7 +13,6 @@ import rx.Observable;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.CountDownLatch;
 
 public class LuceneIndexService implements IndexService {
 
@@ -30,15 +29,10 @@ public class LuceneIndexService implements IndexService {
     }
 
     @Override
-    public void index(URI uri, int level) throws IOException {
-        CountDownLatch latch = new CountDownLatch(1);
+    public int index(URI uri, int level) throws IOException {
         Observable<SearchDocument> observableDocuments = webCrawler.recursiveParse(uri, level);
-        Observable<Void> index = indexer.index(observableDocuments.map(this::fromWebToLuceneDocument), latch);
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            logger.debug("Error when indexing");
-        }
+        logger.info("Before indexing");
+        return indexer.index(observableDocuments.distinct().map(this::fromWebToLuceneDocument));
     }
 
     private Document fromWebToLuceneDocument(SearchDocument webDocument) {

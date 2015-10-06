@@ -26,23 +26,25 @@ public class SearchDocument {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public int hashCode() {
+        return uri.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that == null) return false;
+        if (that.getClass() != this.getClass()) return false;
+        SearchDocument thatDoc = (SearchDocument) that;
+        return thatDoc.getUri().equals(this.getUri());
     }
 }

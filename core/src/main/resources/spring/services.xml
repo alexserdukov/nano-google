@@ -8,17 +8,20 @@
         <constructor-arg index="1" ref="indexer"/>
     </bean>
 
-    <bean id="searchService" name="searchService" class="org.nanogoogle.service.impl.LuceneSearchService">
+    <bean id="searchService" class="org.nanogoogle.service.impl.LuceneSearchService">
         <constructor-arg ref="searcher"/>
     </bean>
 
-    <bean id="webCrawler" class="org.nanogoogle.crawler.WebCrawlerImpl"/>
-    <bean id="directory" name="directory" class="org.apache.lucene.store.RAMDirectory"/>
-
     <bean id="indexer" class="org.nanogoogle.index.LuceneIndexer">
-        <constructor-arg ref="directory"/>
+        <constructor-arg index="0" ref="directory"/>
+        <constructor-arg index="1" ref="analyzer"/>
     </bean>
     <bean id="searcher" class="org.nanogoogle.search.LuceneSearcher">
         <constructor-arg ref="directory"/>
     </bean>
+
+    <bean id="webCrawler" class="org.nanogoogle.crawler.WebCrawlerImpl"/>
+    <bean id="directory" class="org.apache.lucene.store.RAMDirectory"/>
+    <bean id="analyzer" class="org.apache.lucene.analysis.standard.StandardAnalyzer"/>
+
 </beans>

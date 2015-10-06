@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import rx.Observable;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -22,9 +23,9 @@ import java.net.URL;
 import java.util.List;
 
 @Controller
-public class IndexController {
+public class NanoController {
 
-    Logger logger = LoggerFactory.getLogger(IndexController.class);
+    Logger logger = LoggerFactory.getLogger(NanoController.class);
     @Autowired
     IndexService indexService;
     @Autowired
@@ -41,9 +42,10 @@ public class IndexController {
         String uri = indexForm.getUri();
         logger.debug("Received " + uri + " for indexing");
         try {
-            if (validateUrl(uri))
-                indexService.index(URI.create(uri), 2);
-            else
+            if (validateUrl(uri)) {
+                int indexed = indexService.index(URI.create(uri), 3);
+                model.addAttribute("indexed", indexed);
+            }else
                 model.addAttribute("errorMessage", String.format("URL %s is malformed  ", uri));
         } catch (IOException e) {
             model.addAttribute("errorMessage", "Cannot index uri " + uri);
@@ -62,7 +64,8 @@ public class IndexController {
     @ModelAttribute("searchResults")
     public List<SearchDocument> search(@ModelAttribute SearchForm searchForm, Model model) {
         try {
-            final List<SearchDocument> searchResults = searchService.search(searchForm.getKeyword(), 0, 10);
+            final Observable<SearchDocument> observableResults = searchService.search(searchForm.getKeyword(), 0, 10);
+            List<SearchDocument> searchResults = Lists.newArrayList(observableResults.toBlocking().getIterator());
             logger.debug("Found " + searchResults.size() + " records");
             return searchResults;
         } catch (IOException e) {
@@ -81,7 +84,4 @@ public class IndexController {
             return false;
         }
     }
-
-
-
 }

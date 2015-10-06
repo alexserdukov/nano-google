@@ -8,25 +8,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"/>
+    <style type="text/css">
+        .top-buffer { margin-top:100px; }
+        .mid-buffer {margin-inside: 40px;}
+    </style>
 </head>
 <body>
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <form class="form-inline" action="/search" th:object="${searchForm}" method="post">
-            <div class="form-group">
-                <input class="form-control" type="text" th:field="*{keyword}" placeholder="http://google.com"/>
-            </div>
-            <button type="submit" class="btn btn-default">Search</button>
-        </form>
-        <a href="/index">Go to Index</a>
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-md-6 col-md-offset-3">
+            <form class="form-inline" action="/search" th:object="${searchForm}" method="post">
+                <div class="form-group">
+                    <input class="form-control" type="text" size="50" th:field="*{keyword}"/>
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+            <a href="/index">Go to Index</a>
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <div th:each="result : ${searchResults}">
-            <a th:href="${result.uri}"><span th:text="${result.title}"></span> </a>
-            <!--<span th:text="${result.content}"></span>-->
+    <div class="row mid-buffer">
+        <div class="col-md-6 col-md-offset-3">
+            <div th:each="result : ${searchResults}">
+                <span th:text="${result.title}"/>
+                <br/>
+                <a th:href="${result.uri}"><span th:text="${result.uri}"></span></a>
+                <br/><br/>
+            </div>
         </div>
     </div>
 </div>
