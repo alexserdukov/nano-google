@@ -37,7 +37,7 @@ public class LuceneIndexerTest{
     public void setupIndex() throws IOException {
         indexer = new LuceneIndexer(directory, analyzer);
         searcher = new LuceneSearcher(directory, analyzer);
-        logger.debug("Indexed " + indexer.index(generateDocuments()).toBlocking().first() + " records");
+        logger.debug("Indexed " + indexer.index(generateDocuments()) + " records");
     }
 
     @Test

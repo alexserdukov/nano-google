@@ -36,8 +36,8 @@ public class LuceneIndexServiceTests {
 
     @Test
     public void testIndex() throws IOException {
-        Integer indexed = indexService.index(URI.create("http://google.com"), 3).count().toBlocking().first();
-        assertTrue(indexed > 0);
+        Integer indexed = indexService.index(URI.create("http://google.com"), 2);
+        assertTrue(indexed >0);
         Observable<SearchDocument> documents = searchService.search("google", 0, 10);
         assertTrue(StreamSupport.stream(documents.toBlocking().toIterable().spliterator(), true).count() == 10);
     }
